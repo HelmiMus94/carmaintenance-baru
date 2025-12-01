@@ -23,9 +23,11 @@ class SummonResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('car_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('car_id')
+                    ->relationship('car', 'plate_number')
+                    ->searchable()
+                    ->required(),
+
                 Forms\Components\DatePicker::make('summon_date')
                     ->required(),
                 Forms\Components\TextInput::make('location')
@@ -37,7 +39,12 @@ class SummonResource extends Resource
                 Forms\Components\TextInput::make('offence_type')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('payment_status')
+                Forms\Components\Select::make('payment_status')
+                    ->options([
+                        'unpaid' => 'Unpaid',
+                        'paid' => 'Paid',
+                    ])
+                    ->default('unpaid')
                     ->required(),
                 Forms\Components\TextInput::make('paid_by')
                     ->maxLength(255),
@@ -50,8 +57,9 @@ class SummonResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('car_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Car')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('summon_date')
                     ->date()
                     ->sortable(),
