@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Summon extends Model
 {
     protected $fillable = [
         'car_id',
-        'summmon_date',
+        'summon_date',
         'location',
         'amount',
         'offence_type',
